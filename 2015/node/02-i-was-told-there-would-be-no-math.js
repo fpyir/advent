@@ -40,5 +40,21 @@ const getTotalSqFtRequired = (packageList) => {
         .reduce((a, b) => a + b, 0);
 };
 
-console.log(`you need ${getTotalSqFtRequired(PUZZLE_INPUT)}`);
-// answer: 1606483
+const getRibbonLength = (dimensions) => {
+    const [length, width, height] = dimensions.split('x').map(i => Number(i));
+    const smallestSides = [length, width, height].sort((a, b) => a - b).slice(0, 2);
+
+    const wrappingRibbon = smallestSides[0] * 2 + smallestSides[1] * 2;
+    const bowRibbon = length * width * height; 
+    
+    return wrappingRibbon + bowRibbon;
+}
+
+const getTotalRibbonRequired = (packageList) => {
+    return packageList
+        .map(dimensions => getRibbonLength(dimensions))
+        .reduce((a, b) => a + b, 0);
+}
+
+console.log(`you need ${getTotalSqFtRequired(PUZZLE_INPUT)} sq ft of wapping paper`); // answer: 1606483
+console.log(`you need ${getTotalRibbonRequired(PUZZLE_INPUT)} feet of ribbon`); // answer: 3842356
