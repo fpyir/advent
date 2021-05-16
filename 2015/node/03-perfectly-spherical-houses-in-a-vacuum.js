@@ -42,19 +42,31 @@ const addMove = ({ x, y }, move) => {
     }
 }
 
-
-const getHousesVistedOnce = (moves) => {
-    let coord = { x: 0, y: 0 };
+const getHousesVistedOnce = (moves, doubleSantas = false) => {
+    let coord1 = { x: 0, y: 0 };
+    let coord2 = { x: 0, y: 0 };
 
     const coordinates = new Set(['0x0']);
 
-    for (const move of moves) {
-        coord = addMove(coord, move);
-
-        coordinates.add(`${coord.x}x${coord.y}`);
+    for (let i = 0; i < moves.length; i++) {
+        const move = moves[i];
+        
+        if (doubleSantas) {
+            if (i % 2 === 0) {
+                coord2 = addMove(coord2, move);
+                coordinates.add(`${coord2.x}x${coord2.y}`);
+            } else {
+                coord1 = addMove(coord1, move);
+                coordinates.add(`${coord1.x}x${coord1.y}`);
+            }
+        } else {
+            coord1 = addMove(coord1, move);
+            coordinates.add(`${coord1.x}x${coord1.y}`);
+        }
     }
 
     return coordinates.size;
 }
 
 console.log(`visited ${getHousesVistedOnce(PUZZLE_INPUT)} houses at least once`); // answer: 2592.
+console.log(`visited ${getHousesVistedOnce(PUZZLE_INPUT, true)} houses at least once`); // answer: 2360.
