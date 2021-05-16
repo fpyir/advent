@@ -12,7 +12,8 @@
     "2015/02": "node 2015/node/02-i-was-told-there-would-be-no-math.js",
     "2015/03": "node 2015/node/03-perfectly-spherical-houses-in-a-vacuum.js",
     "2015/04": "node 2015/node/04-the-ideal-stocking-stuffing.js",
-    "2015/05": "node 2015/node/05-doesnt-he-have-intern-elves-for-this.js"
+    "2015/05": "node 2015/node/05-doesnt-he-have-intern-elves-for-this.js",
+    "2015/06": "node 2015/node/06-probably-a-fire-hazard.js"
   },
   "repository": {
     "type": "git",
