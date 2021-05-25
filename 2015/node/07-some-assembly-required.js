@@ -37,56 +37,72 @@ const path = require('path');
 const PUZZLE_PATH = path.resolve(__dirname, '..', 'inputs', '7.txt');
 const PUZZLE_INPUT = fs.readFileSync(PUZZLE_PATH, 'utf8').split('\n');
 
-const BTIWISE = {
-    AND: (a, b) => a & b,
-    OR: (a, b) => a | b,
-    NOT: (a) => ~a,
-    LSHIFT: (a, b) => a << b,
-    RSHIFT: (a, b) => a >> b,
+var wires = {};
+function Wire(instruction) {
+	this.calculate = this.generateValueGetter(instruction);
 }
 
-const parseInstruction = (instruction) => {
-    const command = instruction.match(/[A-Z]+/g);
-    const arguments = instruction.match(/[A-z0-9]+/g);
-    const destination = arguments.pop();
+Wire.prototype.getValue = function() {
+	if (this.value === undefined) {
+		this.value = this.checkRange(this.calculate());
+	}
+	return this.value;
+};
 
-    return {
-        command: command ? command[0] : null,
-        args: arguments.map(arg => isNaN(Number(arg)) ? arg : Number(arg)),
-        destination,
-    }
+Wire.prototype.checkRange = function(i) {
+	var n = 65536;
+	return ((i%n)+n)%n;
+};
+
+Wire.prototype.generateValueGetter = function(instruction) {
+	var assignMatch, opMatch;
+
+	if (assignMatch = /^(NOT )?([0-9]+|[a-z]+)$/.exec(instruction)) {
+		return function() {
+			var value = parseValue(assignMatch[2]);
+			if (assignMatch[1])
+				value = ~ value;
+			return value;
+		}
+	} else if (opMatch = /^([a-z]+|[0-9]+) (AND|OR|LSHIFT|RSHIFT) ([a-z]+|[0-9]+)$/.exec(instruction)) {
+		var opCode = this.ops[opMatch[2]];
+
+		return function() {
+			return eval(parseValue(opMatch[1]) + ' ' + opCode + ' ' + parseValue(opMatch[3]));
+		}
+
+	}
+};
+
+Wire.prototype.ops = {
+	'AND'    : '&',
+	'OR'     : '|',
+	'LSHIFT' : '<<',
+	'RSHIFT' : '>>',
+};
+
+// Determine if a key refers to an integer or a wire & return its value
+function parseValue(key) {
+	var i = parseInt(key);
+	return !isNaN(i) ? i : wires[key].getValue();
 }
 
-const CIRCUIT = {};
+// Generate all wire objects
+PUZZLE_INPUT.forEach(function(item) {
+	var match;
+	if (match = /(.*) -> ([a-z]+)/.exec(item))
+		wires[match[2]] = new Wire(match[1]);
+});
 
-for (let instruction of PUZZLE_INPUT) {
-    const { command, args, destination } = parseInstruction(instruction);
-    CIRCUIT[destination] = { command, args };
-}
+// Output Part One Answer
+var partOne = wires.a.getValue();
+console.log('Part One:', partOne);
 
+// Reset for Part Two
+Object.keys(wires).forEach(function(key) {
+	wires[key].value = undefined;
+});
+wires.b.value = partOne;
 
-const findValueOfWire = (wireName) => {
-    const wire = CIRCUIT[wireName];
-    console.log(wire);
-
-    if (typeof wireName === 'number') {
-        return wireName;
-    } else if (typeof wire === 'number') {
-        return wire;
-    } else if (typeof wire === 'undefined') {
-        return undefined;
-    }
-
-    if (!wire.command) {
-        CIRCUIT[wireName] = findValueOfWire(wire.args[0]);
-    } else {
-        CIRCUIT[wireName] = wire.command(
-            findValueOfWire(wire.args[0]),
-            findValueOfWire(wire.args[1]),
-        );
-    }
-
-    return CIRCUIT[wireName];
-}
-
-console.log(`value of wire 'a' is ${findValueOfWire('a')}`);
+// Output Part Two Answer
+console.log('Part Two:', wires.a.getValue());
