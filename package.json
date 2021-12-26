@@ -14,7 +14,8 @@
     "2015/04": "node 2015/node/04-the-ideal-stocking-stuffing.js",
     "2015/05": "node 2015/node/05-doesnt-he-have-intern-elves-for-this.js",
     "2015/06": "node 2015/node/06-probably-a-fire-hazard.js",
-    "2015/07": "node 2015/node/07-some-assembly-required.js"
+    "2015/07": "node 2015/node/07-some-assembly-required.js",
+    "2015/08": "node 2015/node/08-matchsticks.js"
   },
   "repository": {
     "type": "git",
