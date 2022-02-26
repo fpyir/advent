@@ -18,7 +18,8 @@
     "2015/08": "node 2015/node/08-matchsticks.js",
     "2015/09": "node 2015/node/09-all-in-a-single-night.js",
     "2015/10": "node 2015/node/10-elves-look-elves-say.js",
-    "2015/11": "node 2015/node/11-corporate-policy.js"
+    "2015/11": "node 2015/node/11-corporate-policy.js",
+    "2015/12": "node 2015/node/12-accounting-elves.js"
   },
   "repository": {
     "type": "git",
