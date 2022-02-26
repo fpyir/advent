@@ -16,27 +16,27 @@ Within each language I will be writing the code as idiomatic as possible. In som
     - [ ] In Go
     - [ ] In Java
 - [ ] 2016 Advent
-    - [ ] In Node
     - [ ] In Python
+    - [ ] In Node
     - [ ] In Go
     - [ ] In Java
 - [ ] 2017 Advent
-    - [ ] In Node
-    - [ ] In Python
     - [ ] In Go
+    - [ ] In Python
+    - [ ] In Node
     - [ ] In Java
 - [ ] 2018 Advent
-    - [ ] In Node
+    - [ ] In Java
     - [ ] In Python
     - [ ] In Go
-    - [ ] In Java
-- [ ] 2019 Advent
     - [ ] In Node
+- [ ] 2019 Advent
     - [ ] In Python
+    - [ ] In Node
     - [ ] In Go
     - [ ] In Java
 - [ ] 2020 Advent
-    - [ ] In Node
-    - [ ] In Python
     - [ ] In Go
+    - [ ] In Python
+    - [ ] In Node
     - [ ] In Java
