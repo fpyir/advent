@@ -15,7 +15,6 @@ const makeNewPassword = (oldPassword) => {
   for (let i = password.length - 1; i >= 0; i--) {
     if (shouldIncrement) {
       const nextLetter = getNextLetter(password[i]);
-      console.log(password[i], nextLetter);
       password[i] = nextLetter;
 
       shouldIncrement = nextLetter === "a";
@@ -25,26 +24,24 @@ const makeNewPassword = (oldPassword) => {
   return password.join("");
 };
 
-const hasBadChars = (password) => Boolean(password.match(/[iol]/));
+const hasBadChars = (password) => /i|o|l]/.test(password);
 
-const hasTwoPairs = (password) => {
-  const onePairRemoved = password.replace(/(.)\1{1}/, "");
-  const secondPairRemoved = onePairRemoved.replace(/(.)\1{1}/, "");
-
-  return (
-    secondPairRemoved.length < onePairRemoved.length &&
-    onePairRemoved.length < password.length
-  );
-};
+const hasTwoPairs = (password) =>
+  Boolean(password.match(/([a-z])\1.+([a-z])\2/));
 
 const hasIncreasingStraight = (password) => {
   let hasIncreasingStraight = false;
-  let straightCount = 0;
+  let straightCount = 1;
   let prevChar = password[0];
 
   for (const char of password.slice(1)) {
-    if (char === getNextLetter(prevChar)) {
+    const nextChar = getNextLetter(prevChar);
+
+    // don't match against z -> a
+    if (char === nextChar && nextChar !== "a") {
       straightCount += 1;
+    } else {
+      straightCount = 1;
     }
 
     if (straightCount === 3) {
@@ -59,10 +56,6 @@ const hasIncreasingStraight = (password) => {
 };
 
 const isValidPassword = (password) => {
-  // console.log("hasBadChars", hasBadChars(password));
-  // console.log("hasTwoPairs", hasTwoPairs(password));
-  // console.log("hasIncreasingStraight", hasIncreasingStraight(password));
-
   return (
     !hasBadChars(password) &&
     hasTwoPairs(password) &&
@@ -73,15 +66,15 @@ const isValidPassword = (password) => {
 const makeValidPassword = (password) => {
   let nextPassword = makeNewPassword(password);
 
-  let isValid = isValidPassword(nextPassword);
-
-  while (!isValid) {
+  while (!isValidPassword(nextPassword)) {
     nextPassword = makeNewPassword(nextPassword);
-    console.log(nextPassword);
-    isValid = isValidPassword(nextPassword);
   }
 
   return nextPassword;
 };
 
-console.log("validPassword", makeValidPassword("cqjxjnds"));
+const firstPassword = makeValidPassword(PUZZLE_INPUT);
+const secondPassword = makeValidPassword(firstPassword);
+
+console.log("first password", firstPassword);
+console.log("second password", secondPassword);
