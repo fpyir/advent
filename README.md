@@ -14,19 +14,19 @@ Within each language I will be writing the code as idiomatic as possible. In som
     - [ ] In Node
     - [ ] In Python
     - [ ] In Go
-    - [ ] In Java
+    - [ ] In Rust
 - [ ] 2016 Advent
     - [ ] In Python
     - [ ] In Node
     - [ ] In Go
-    - [ ] In Java
+    - [ ] In Rust
 - [ ] 2017 Advent
     - [ ] In Go
     - [ ] In Python
     - [ ] In Node
-    - [ ] In Java
+    - [ ] In Rust
 - [ ] 2018 Advent
-    - [ ] In Java
+    - [ ] In Rust
     - [ ] In Python
     - [ ] In Go
     - [ ] In Node
@@ -34,9 +34,9 @@ Within each language I will be writing the code as idiomatic as possible. In som
     - [ ] In Python
     - [ ] In Node
     - [ ] In Go
-    - [ ] In Java
+    - [ ] In Rust
 - [ ] 2020 Advent
     - [ ] In Go
     - [ ] In Python
     - [ ] In Node
-    - [ ] In Java
+    - [ ] In Rust
